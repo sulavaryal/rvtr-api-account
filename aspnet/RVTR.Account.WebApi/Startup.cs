@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using RVTR.Account.DataContext;
 using RVTR.Account.DataContext.Repositories;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Threading.Tasks;
 using zipkin4net.Middleware;
 
 namespace RVTR.Account.WebApi
@@ -101,8 +102,14 @@ namespace RVTR.Account.WebApi
 
       applicationBuilder.UseCors();
       applicationBuilder.UseAuthorization();
+
+
       applicationBuilder.UseEndpoints(endpoints =>
       {
+        endpoints.MapGet("/", context => {
+          context.Response.Redirect("/swagger/");
+          return Task.CompletedTask;
+        });
         endpoints.MapControllers();
       });
     }
